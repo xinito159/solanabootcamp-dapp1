@@ -14,29 +14,12 @@ import { MatAnchor } from '@angular/material/button'
   selector: 'dapp1-root',
   template: `
     <header class="py-8">
-      <h1 class="text-2xl text-center mb-4"> Hola Soy Xinitono.</h1>
+      <h1 class="text-2xl text-center mb-4"> Bienvenido Xinitono.</h1>
 
       <div class="flex justify-center">
       <hd-wallet-multi-button></hd-wallet-multi-button>
       </div>
 
-      @if (account()){
-      <div class="flex justify-center items-center py-4">
-        <img [src]="account()?.info?.image" class="w-8 h-8"/>
-        <p class="text-xl">{{ account()?.balance}}</p>
-      </div>      
-      }
-
-      <nav>
-        <ul class="flex justify-center items-center gap-4 py-4">
-          <li>
-            <a [routerLink]="['']" mat-raised-button>Home</a>
-          </li>
-          <li>
-            <a [routerLink]="['settings']" mat-raised-button>Settings</a>
-          </li>
-        </ul>
-      </nav>
     </header>
 
     <main>
