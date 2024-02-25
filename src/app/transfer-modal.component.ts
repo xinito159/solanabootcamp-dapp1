@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TransferFormComponent, TransferFormPayload} from './transfer-form.component'
+import { injectTransactionSender } from '@heavy-duty/wallet-adapter';
+import { createTransferInstructions } from '@heavy-duty/spl-utils'
+
 
 @Component({
     selector: 'dapp1-transfer-modal',
@@ -16,7 +19,23 @@ import { TransferFormComponent, TransferFormPayload} from './transfer-form.compo
 })
 
 export class TransferModalComponent{
+    private readonly _transactionSender = injectTransactionSender();
+
     onTransfer(payload: TransferFormPayload) {
-        console.log('Hola transferito', payload)
+        console.log('Hola transferito', payload);
+        
+        this._transactionSender.send(({publicKey}) => createTransferInstructions({
+            amount: payload.amount,
+            mintAddress: '7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs',
+            receiverAddress: payload.receiverAddress,
+            senderAddress: publicKey.toBase58(),
+            fundReceiver: true,
+            memo: payload.memo
+
+        })) .subscribe({
+                next: (signature) => console.log(`Firma: ${signature}`),
+                error: error => console.error(error),
+                complete: () => console.log('Transacción lista.')
+            })
     }
 }
