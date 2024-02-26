@@ -22,7 +22,7 @@ export class TransferModalComponent{
     private readonly _transactionSender = injectTransactionSender();
 
     onTransfer(payload: TransferFormPayload) {
-        console.log('Hola transferito', payload);
+        console.log('Enviando transferencia', payload);
         
         this._transactionSender.send(({publicKey}) => createTransferInstructions({
             amount: payload.amount,
